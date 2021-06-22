@@ -3,8 +3,9 @@ from read_model import (
     read_literals_from_string,
     extract_weight_from_string,
     get_horn_clause_from_string,
+    get_trees,
 )
-from fol import Literal, Predicate, Variable, Constant
+from fol import Literal, Predicate, Variable, Constant, HornClause
 
 
 def test_read_horn_clause_from_string():
@@ -58,3 +59,17 @@ def test_get_horn_clause_from_string():
         Predicate("workedunder"), [Variable("_"), Variable("_")]
     )
     assert len(clause.tail) == 0
+
+
+def test_get_trees():
+    trees_string = [
+        "setParam: stringsAreCaseSensitive = true.\n\nusePrologVariables: true.\n\n\n(workedunder(A, B, 0.8581489350995084) :-  /* #pos=337 */ actor(A), director(B), movie(UniqueVar1, A), movie(UniqueVar1, B)).\n(workedunder(A, B, -0.1418510649004877) :-  /* #neg=29 */ actor(A), director(B)).\nworkedunder(_, _, -0.14185106490048816) /* #neg=308 */ .\n",  # noqa
+        "setParam: stringsAreCaseSensitive = true.\n\nusePrologVariables: true.\n\n\n(workedunder(A, B, 0.719473412210958) :-  /* #pos=337 */ director(B), actor(A), movie(UniqueVar2, A), movie(UniqueVar2, B)).\n(workedunder(A, B, -0.12544463852839138) :-  /* #neg=29 */ director(B), actor(A)).\nworkedunder(_, _, -0.12544463852839197) /* #neg=308 */ .\n",  # noqa
+        "setParam: stringsAreCaseSensitive = true.\n\nusePrologVariables: true.\n\n\n(workedunder(A, B, 0.06245298988159939) :-  /* #pos=337 */ actor(A), director(B), movie(UniqueVar19, A), movie(UniqueVar19, B)).\n(workedunder(A, B, -0.04109376153604857) :-  /* #neg=29 */ actor(A), director(B)).\nworkedunder(_, _, -0.041093761536048504) /* #neg=308 */ .\n",  # noqa
+        "setParam: stringsAreCaseSensitive = true.\n\nusePrologVariables: true.\n\n\n(workedunder(A, B, 0.05889459763950667) :-  /* #pos=337 */ actor(A), director(B), movie(UniqueVar20, A), movie(UniqueVar20, B), !).\n(workedunder(A, B, -0.039504650587338576) :-  /* #neg=29 */ actor(A), director(B), !).\n(workedunder(_, _, -0.03950465058733851) :-  /* #neg=308 */ !).\n",  # noqa
+    ]
+    trees = get_trees(trees_string)
+    assert len(trees) == 4
+    assert len(trees[0]) == 3
+    assert type(trees[0]) == list
+    assert type(trees[0][0]) == HornClause

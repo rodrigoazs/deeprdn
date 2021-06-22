@@ -16,6 +16,9 @@ def read_horn_clause_from_string(clause_string):
         head = match.groups()[0].strip()
         tail = ""
         return head, tail
+    raise Exception(
+        'Could not identify horn clause from string "{}".'.format(clause_string)
+    )
 
 
 def read_literals_from_string(clause_string):
@@ -46,3 +49,21 @@ def get_horn_clause_from_string(clause_string):
     tail = read_literals_from_string(tail)
     clause = HornClause(head[0], tail, weight)
     return clause
+
+
+def get_trees(tree_list):
+    model = []
+    for tree in tree_list:
+        clauses = tree.split("\n")
+        horn_clauses = []
+        for clause in clauses:
+            # non clause cases
+            if (
+                not len(clause)
+                or clause.startswith("setParam")  # noqa: W503
+                or clause.startswith("usePrologVariables")  # noqa: W503
+            ):
+                continue
+            horn_clauses.append(get_horn_clause_from_string(clause))
+        model.append(horn_clauses)
+    return model
