@@ -11,5 +11,6 @@ def test_background_knowledge():
     ]
     bk = PandasBackgroundKnowledge(pos, [], facts)
     assert bk.pos["teste"].shape == (1, 2)
+    assert bk.pos["teste"].columns[1] == "teste_1"
     assert bk.facts["teste2"].shape == (1, 2)
     assert bk.facts["teste3"].shape == (3, 3)
