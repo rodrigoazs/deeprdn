@@ -7,9 +7,15 @@ def read_horn_clause_from_string(clause_string):
     match = re.match(
         '\(([a-zA-z0-9\(\),\s\_\."]*):-([a-zA-z0-9\(\),\s\_\."]*)\)\.', ret
     )
-    head = match.groups()[0].strip()
-    tail = match.groups()[1].strip()
-    return head, tail
+    if match:
+        head = match.groups()[0].strip()
+        tail = match.groups()[1].strip()
+        return head, tail
+    match = re.match('([a-zA-z0-9\(\),\s\_\."\-]*)\s*\.', ret)
+    if match:
+        head = match.groups()[0].strip()
+        tail = ""
+        return head, tail
 
 
 def read_literals_from_string(clause_string):
@@ -27,7 +33,7 @@ def read_literals_from_string(clause_string):
 
 
 def extract_weight_from_string(literal_string):
-    predicate, *arguments, weight = re.findall('([a-zA-z0-9"\.]+)', literal_string)
+    predicate, *arguments, weight = re.findall('([a-zA-z0-9"\.\-]+)', literal_string)
     weight = float(weight)
     literal = "{}({})".format(predicate, ", ".join(arguments))
     return weight, literal
