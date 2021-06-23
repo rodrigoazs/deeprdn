@@ -1,4 +1,4 @@
-from read_model import (
+from read import (
     read_horn_clause_from_string,
     read_literals_from_string,
     extract_weight_from_string,
