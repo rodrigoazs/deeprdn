@@ -20,7 +20,7 @@ class Prover(BaseProver):
             )
         return data_dict
 
-    def prove(self, head_mapping: dict, clause: List[Literal]):
+    def prove(self, head_mapping: dict, clause: List[Literal]):  # noqa: C901
         last_mapping = head_mapping.copy()
         for literal in clause:
             literal_mapping = {}
@@ -33,6 +33,8 @@ class Prover(BaseProver):
                         and last_mapping.get(argument.name) is not None  # noqa: W503
                     ):
                         literal_mapping[i] = last_mapping.get(argument.name)
+            if literal.predicate.name not in self.facts:
+                return False
             df = self.facts[literal.predicate.name]
             for i, mapping in literal_mapping.items():
                 df = df[df["{}_{}".format(literal.predicate.name, i)].isin(mapping)]

@@ -11,7 +11,9 @@ class BaseProver:
         pass
 
     def _get_literal(self, literal_string):
-        literals = re.match("([a-zA-Z0-9]*)\(([a-zA-Z0-9\,\s\_]*)\)\.", literal_string)
+        literals = re.match(
+            "([a-zA-Z0-9\_]*)\(([a-zA-Z0-9\,\s\_]*)\)\.", literal_string
+        )
         predicate, arguments = literals.groups()
         arguments = re.sub("\s", "", arguments).split(",")
         return predicate, arguments

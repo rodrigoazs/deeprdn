@@ -2,6 +2,18 @@ from fol import Literal, Predicate, Variable, Constant
 from prover.prover import Prover
 
 
+def test_get_literal():
+    prover = Prover([], [], [])
+    literal_string = "professor(person407)."
+    predicate, arguments = prover._get_literal(literal_string)
+    assert predicate == "professor"
+    assert arguments == ["person407"]
+    literal_string = "recursion_advisedby(person265,person168)."
+    predicate, arguments = prover._get_literal(literal_string)
+    assert predicate == "recursion_advisedby"
+    assert arguments == ["person265", "person168"]
+
+
 def test_background_knowledge():
     pos = ["teste(teste2, teste3)."]
     facts = [

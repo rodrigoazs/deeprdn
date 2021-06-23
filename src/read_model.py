@@ -69,6 +69,7 @@ def get_trees(tree_list):
             if (
                 not len(clause)
                 or clause.startswith("setParam")  # noqa: W503
+                or clause.startswith("useStdLogicVariables")  # noqa: W503
                 or clause.startswith("usePrologVariables")  # noqa: W503
             ):
                 continue
