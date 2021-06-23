@@ -45,7 +45,7 @@ def test_boost_model():
     database.facts = facts
 
     vector = boost.get_proved_vector(database)
-    assert len(vector) == 3
+    assert vector.shape == (3, 60)
     true = [
         [
             1.0,
