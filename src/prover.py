@@ -18,7 +18,7 @@ class Prover:
                         and last_mapping.get(argument.name) is not None  # noqa: W503
                     ):
                         literal_mapping[i] = last_mapping.get(argument.name)
-            df = self.facts[literal.predicate.name].copy()
+            df = self.facts[literal.predicate.name]
             for i, mapping in literal_mapping.items():
                 df = df[df["{}_{}".format(literal.predicate.name, i)].isin(mapping)]
             if not len(df):

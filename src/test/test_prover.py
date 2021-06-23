@@ -53,4 +53,4 @@ def test_prover():
             Literal(Predicate("movie"), [Constant("movie1"), Variable("B")]),
         ],
     )
-    assert not result
+    assert result
