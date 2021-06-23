@@ -14,6 +14,6 @@ class PandasBackgroundKnowledge(BackgroundKnowledgeBase):
         for key, value in data_dict.items():
             data_dict[key] = pd.DataFrame(
                 value,
-                columns=["{}_{}".format(predicate, i) for i in range(len(value[0]))],
+                columns=["{}_{}".format(key, i) for i in range(len(value[0]))],
             )
         return data_dict

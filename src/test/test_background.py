@@ -14,3 +14,5 @@ def test_background_knowledge():
     assert bk.pos["teste"].columns[1] == "teste_1"
     assert bk.facts["teste2"].shape == (1, 2)
     assert bk.facts["teste3"].shape == (3, 3)
+    assert bk.facts["teste2"].columns[0] == "teste2_0"
+    assert bk.facts["teste3"].columns[1] == "teste3_1"
