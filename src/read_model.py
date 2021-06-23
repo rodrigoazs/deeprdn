@@ -5,11 +5,19 @@ from fol import Variable, Constant, Literal, Predicate, HornClause
 def read_horn_clause_from_string(clause_string):
     ret = re.sub("(\/\*[a-zA-Z0-9\s\#\=]*\*\/)", "", clause_string)
     match = re.match(
-        '\(([a-zA-Z0-9\(\),\s\_\."]*):-([a-zA-Z0-9\(\),\s\_\."]*)\)\.', ret
+        '\(([a-zA-Z0-9\(\),\s\_\."\-]*):-([a-zA-Z0-9\(\),\s\_\."]*)\!*\)\.', ret
     )
     if match:
         head = match.groups()[0].strip()
         tail = match.groups()[1].strip()
+        if tail:
+            tail = tail[:-1] if tail[-1] == "," else tail
+        # assert matched correctly
+        # accepts "!)."
+        if not len(tail) and len(ret.split(":-")[1].strip()) > 3:
+            raise Exception(
+                'Could not identify horn clause from string "{}".'.format(clause_string)
+            )
         return head, tail
     match = re.match('([a-zA-Z0-9\(\),\s\_\."\-]*)\s*\.', ret)
     if match:

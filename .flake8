@@ -2,4 +2,4 @@
 ignore=E999,W504,W293,N803,N806,W605
 max-complexity = 10
 max-line-length = 88
-exclude = */__init__.py, */*/__init__.py, setup.py, get_datasets.py, venv, test/*
+exclude = */__init__.py, */*/__init__.py, setup.py, get_datasets.py, venv, test/*, src/test/*

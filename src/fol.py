@@ -90,3 +90,10 @@ class HornClause:
         self.head = head
         self.tail = tail
         self.weight = weight
+
+    def __str__(self):
+        return "{} {} :- {}".format(
+            self.weight,
+            str(self.head),
+            ", ".join([str(literal) for literal in self.tail]),
+        )

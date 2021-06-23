@@ -1,7 +1,7 @@
-from srlearn import Database
 from srlearn.rdn import BoostedRDN
 from prover.prover import Prover
 from read_model import get_trees
+import numpy as np
 
 
 class VectorBoostedRDN(BoostedRDN):
@@ -24,11 +24,7 @@ class VectorBoostedRDN(BoostedRDN):
         )
 
     def get_proved_vector(self, database):
-        prover = Prover(
-            database.pos,
-            database.neg,
-            database.facts
-        )
+        prover = Prover(database.pos, database.neg, database.facts)
         trees = get_trees(self.estimators_)
         result = []
         for data in (prover.pos, prover.neg):
@@ -36,7 +32,7 @@ class VectorBoostedRDN(BoostedRDN):
                 sample = row.values.tolist()
                 vec = self._get_proved_sample_vector(prover, trees, sample)
                 result.append(vec)
-        return result
+        return np.array(result)
 
     def _get_proved_sample_vector(self, prover, trees, sample):
         sample_vector = []
@@ -53,6 +49,3 @@ class VectorBoostedRDN(BoostedRDN):
                     break
             sample_vector.extend(vector)
         return sample_vector
-
-    
-
