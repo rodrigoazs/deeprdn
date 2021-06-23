@@ -1,7 +1,7 @@
 import re
 
 
-class BackgroundKnowledgeBase:
+class BaseProver:
     def __init__(self, pos, neg, facts):
         self.pos = self._compile(pos)
         self.neg = self._compile(neg)
@@ -15,3 +15,6 @@ class BackgroundKnowledgeBase:
         predicate, arguments = literals.groups()
         arguments = re.sub("\s", "", arguments).split(",")
         return predicate, arguments
+
+    def prover(self, mapping, clause):
+        pass
