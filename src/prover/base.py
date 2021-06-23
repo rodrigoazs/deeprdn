@@ -16,5 +16,5 @@ class BaseProver:
         arguments = re.sub("\s", "", arguments).split(",")
         return predicate, arguments
 
-    def prover(self, mapping, clause):
+    def prover(self, head_mapping, clause):
         pass

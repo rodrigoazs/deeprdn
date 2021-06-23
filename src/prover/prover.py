@@ -1,6 +1,7 @@
 import pandas as pd
 from prover.base import BaseProver
-from fol import Variable, Constant
+from fol import Variable, Constant, Literal
+from typing import List
 
 
 class Prover(BaseProver):
@@ -19,8 +20,8 @@ class Prover(BaseProver):
             )
         return data_dict
 
-    def prove(self, mapping, clause):
-        last_mapping = mapping.copy()
+    def prove(self, head_mapping: dict, clause: List[Literal]):
+        last_mapping = head_mapping.copy()
         for literal in clause:
             literal_mapping = {}
             for i, argument in enumerate(literal.arguments):
