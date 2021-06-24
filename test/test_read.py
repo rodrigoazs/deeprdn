@@ -1,11 +1,11 @@
-from read import (
+from deeprdn.read import (
     read_horn_clause_from_string,
     read_literals_from_string,
     extract_weight_from_string,
     get_horn_clause_from_string,
     get_trees,
 )
-from fol import Literal, Predicate, Variable, Constant, HornClause
+from deeprdn.fol import Literal, Predicate, Variable, Constant, HornClause
 
 
 def test_read_horn_clause_from_string():

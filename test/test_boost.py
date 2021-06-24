@@ -1,4 +1,4 @@
-from boost import VectorBoostedRDN
+from deeprdn.boost import VectorBoostedRDN
 from srlearn import Database
 import numpy as np
 

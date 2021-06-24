@@ -1,5 +1,5 @@
 import re
-from fol import Variable, Constant, Literal, Predicate, HornClause
+from deeprdn.fol import Variable, Constant, Literal, Predicate, HornClause
 
 
 def read_horn_clause_from_string(clause_string):

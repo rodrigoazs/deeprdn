@@ -1,5 +1,5 @@
-from fol import Literal, Predicate, Variable, Constant
-from prover.prover import Prover
+from deeprdn.fol import Literal, Predicate, Variable, Constant
+from deeprdn.prover.prover import Prover
 
 
 def test_get_literal():

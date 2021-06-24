@@ -1,6 +1,6 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
-from boost import VectorBoostedRDN
+from deeprdn.boost import VectorBoostedRDN
 from srlearn import Database, Background
 import numpy as np
 import random

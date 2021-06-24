@@ -1,4 +1,4 @@
-from fol import Variable, Constant
+from deeprdn.fol import Variable, Constant
 
 
 class Prover:

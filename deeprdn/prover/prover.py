@@ -1,6 +1,6 @@
 import pandas as pd
-from prover.base import BaseProver
-from fol import Variable, Constant, Literal
+from deeprdn.prover.base import BaseProver
+from deeprdn.fol import Variable, Constant, Literal
 from typing import List
 
 

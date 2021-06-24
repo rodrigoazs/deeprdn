@@ -1,4 +1,4 @@
-from fol import Term, Variable, Constant, Predicate, Atom, Literal, HornClause
+from deeprdn.fol import Term, Variable, Constant, Predicate, Atom, Literal, HornClause
 
 
 def test_create_term():

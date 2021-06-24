@@ -1,6 +1,6 @@
 from srlearn.rdn import BoostedRDN
-from prover.prover import Prover
-from read import get_trees
+from deeprdn.prover.prover import Prover
+from deeprdn.read import get_trees
 import numpy as np
 
 

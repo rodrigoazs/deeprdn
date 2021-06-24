@@ -1,4 +1,4 @@
-from model import DeepRDN
+from deeprdn.model import DeepRDN
 
 def test_model():
     model = DeepRDN()
