@@ -1,25 +1,28 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from boost import VectorBoostedRDN
-from srlearn import Database
+from srlearn import Database, Background
 import numpy as np
 import random
 import re
 
 
-class NeuralRDN:
+class DeepRDN:
     def __init__(
         self,
         background=None,
         target="None",
         n_estimators=50,
         node_size=2,
+        number_of_clauses=4,
         max_tree_depth=2,
         n_boost_estimators=1,
         predicate_prob=0.5,
         sample_prob=0.5,
     ):
         self.background = background
+        if type(self.background) == Background:
+            self.background.number_of_clauses = number_of_clauses
         self.target = target
         self.n_estimators = n_estimators
         self.node_size = node_size
