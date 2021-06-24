@@ -1,7 +1,10 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Dropout
 from boost import VectorBoostedRDN
+from srlearn import Database
 import numpy as np
+import random
+import re
 
 
 class NeuralRDN:
@@ -36,13 +39,15 @@ class NeuralRDN:
                 node_size=self.node_size,
                 max_tree_depth=self.max_tree_depth,
             )
-            estimator.fit(database)
+            estimator.fit(self._filter_database(database))
             self.estimators_.append(estimator)
         X_train = self._get_X(database)
         Y_train = self._get_y(database)
         model = Sequential()
-        model.add(Dense(5, input_shape=(X_train.shape[1],)))
-        model.add(Dense(5))
+        model.add(Dropout(0.5, input_shape=(X_train.shape[1],)))
+        model.add(Dense(10))
+        model.add(Dropout(0.5))
+        model.add(Dense(10))
         model.add(Dense(2, activation="softmax"))
         model.compile(
             loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"]
@@ -69,3 +74,23 @@ class NeuralRDN:
             + [[1.0, 0.0] for _ in range(len(database.neg))]
         )
         return y
+
+    def _filter_database(self, database):
+        if self.predicate_prob == 1.0 and self.sample_prob == 1.0:
+            return database
+        facts = []
+        predicates = {}
+        for fact in database.facts:
+            literals = re.match("([a-zA-Z0-9\_]*)\([a-zA-Z0-9\,\s\_]*\)\.", fact)
+            predicate = literals.groups()[0]
+            if predicate not in predicates:
+                predicates[predicate] = (
+                    True if random.random() < self.predicate_prob else False
+                )
+            if predicates[predicate] and random.random() < self.sample_prob:
+                facts.append(fact)
+        new_database = Database()
+        new_database.pos = database.pos
+        new_database.neg = database.neg
+        new_database.facts = facts
+        return new_database
