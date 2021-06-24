@@ -12,12 +12,12 @@ class NeuralRDN:
         self,
         background=None,
         target="None",
-        n_estimators=10,
+        n_estimators=50,
         node_size=2,
-        max_tree_depth=3,
+        max_tree_depth=2,
         n_boost_estimators=1,
-        predicate_prob=1.0,
-        sample_prob=1.0,
+        predicate_prob=0.5,
+        sample_prob=0.5,
     ):
         self.background = background
         self.target = target
