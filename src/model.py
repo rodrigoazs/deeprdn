@@ -13,6 +13,8 @@ class NeuralRDN:
         node_size=2,
         max_tree_depth=3,
         n_boost_estimators=1,
+        predicate_prob=1.0,
+        sample_prob=1.0,
     ):
         self.background = background
         self.target = target
@@ -20,6 +22,8 @@ class NeuralRDN:
         self.node_size = node_size
         self.max_tree_depth = max_tree_depth
         self.n_boost_estimators = n_boost_estimators
+        self.predicate_prob = predicate_prob
+        self.sample_prob = sample_prob
         self.estimators_ = []
         self.stacking_ = None
 
