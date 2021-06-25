@@ -29,6 +29,10 @@ def test_read_horn_clause_from_string():
     head, tail = read_horn_clause_from_string(clause_string)
     assert head == "workedunder(A, B, -0.039504650587338576)"
     assert tail == "actor(A), director(B)"
+    clause_string = "(athleteplayssport(_, _, 0) :-  /* #neg=1.145 #pos=1.145 */ !)."
+    head, tail = read_horn_clause_from_string(clause_string)
+    assert head == "athleteplayssport(_, _, 0)"
+    assert tail == ""
 
 
 def test_read_literals_from_string():

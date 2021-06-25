@@ -3,7 +3,7 @@ from deeprdn.fol import Variable, Constant, Literal, Predicate, HornClause
 
 
 def read_horn_clause_from_string(clause_string):
-    ret = re.sub("(\/\*[a-zA-Z0-9\s\#\=]*\*\/)", "", clause_string)
+    ret = re.sub("(\/\*[a-zA-Z0-9\s\#\=\.]*\*\/)", "", clause_string)
     match = re.match(
         '\(([a-zA-Z0-9\(\),\s\_\."\-]*):-([a-zA-Z0-9\(\),\s\_\."]*)\!*\)\.', ret
     )
