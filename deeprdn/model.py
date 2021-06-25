@@ -21,8 +21,8 @@ class DeepRDN:
         number_of_clauses: int = 4,
         number_of_cycles: int = 100,
         max_tree_depth: int = 2,
-        predicate_prob: float = 0.5,
-        sample_prob: float = 0.5,
+        predicate_ratio: float = 0.5,
+        sample_ratio: float = 0.5,
         estimator: Callable = None,
     ):
         """Initialize a DeepRDN
@@ -45,9 +45,9 @@ class DeepRDN:
                 learned. Defaults to 100.
             max_tree_depth (int, optional): Maximum number of nodes from root to
                 leaf (height) in the tree. Defaults to 2.
-            predicate_prob (float, optional): Probability of considering a predicate
+            predicate_ratio (float, optional): Proportion of considering a predicate
                 in the search space. Defaults to 0.5.
-            sample_prob (float, optional): Probability of considering a sample when
+            sample_ratio (float, optional): Proportion of considering a sample when
                 training. Defaults to 0.5.
             estimator (Callable, optional): A function that receives a numpy array
             as feature vector of the target samples and returns a classifier and its
@@ -59,8 +59,8 @@ class DeepRDN:
         self.n_boosting_trees = n_boosting_trees
         self.node_size = node_size
         self.max_tree_depth = max_tree_depth
-        self.predicate_prob = predicate_prob
-        self.sample_prob = sample_prob
+        self.predicate_ratio = predicate_ratio
+        self.sample_ratio = sample_ratio
         self.trees_ = None
         self.estimator_ = None
         self._get_estimator = estimator if estimator else self._get_neural_estimator
@@ -172,19 +172,39 @@ class DeepRDN:
         return y
 
     def _filter_database(self, database):
-        if self.predicate_prob == 1.0 and self.sample_prob == 1.0:
+        if self.predicate_ratio == 1.0 and self.sample_ratio == 1.0:
             return database
-        facts = []
-        predicates = {}
+
+        # read facts
+        facts = {}
         for fact in database.facts:
             literals = re.match("([a-zA-Z0-9\_]*)\([a-zA-Z0-9\,\s\_]*\)\.", fact)
             predicate = literals.groups()[0]
-            if predicate not in predicates:
-                predicates[predicate] = (
-                    True if random.random() < self.predicate_prob else False
-                )
-            if predicates[predicate] and random.random() < self.sample_prob:
-                facts.append(fact)
+            facts.setdefault(predicate, []).append(fact)
+
+        # calculate amount
+        predicates = list(facts)
+        num_samples = int(self.sample_ratio * len(database.facts))
+        num_predicates = int(self.predicate_ratio * len(predicates))
+
+        # if has less than 4 predicates raises
+        # an error
+        if num_predicates < 4:
+            raise Exception('Number of predicates to consider is too small: {} predicates.'.format(num_predicates))  # noqa
+
+        # shuffle predicates
+        random.shuffle(predicates)
+        predicates = predicates[:num_predicates]
+
+        # group facts again
+        facts = [value for key, value in facts.items() if key in predicates]
+        facts = [item for sublist in facts for item in sublist]
+
+        # shuffle facts
+        if len(facts) > num_samples:
+            random.shuffle(facts)
+            facts = facts[:num_samples]
+
         new_database = Database()
         new_database.pos = database.pos
         new_database.neg = database.neg

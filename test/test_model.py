@@ -74,13 +74,25 @@ def test_model_filter_database():
         'test2(a,b).',
         'test3(a,b).',
         'test4(a,b).',
+        'test5(a,b).',
+        'test6(a,b).',
+        'test7(a,b).',
+        'test8(a,b).',
+        'test9(a,b).',
+        'test10(a,b).',
     ]
     model = DeepRDN(
-        predicate_prob=0,
-        sample_prob=0,
+        predicate_ratio=0.9,
+        sample_ratio=1.0,
     )
     new_db = model._filter_database(db)
-    assert len(new_db.facts) == 0
+    assert len(new_db.facts) == 9
+    model = DeepRDN(
+        predicate_ratio=1.0,
+        sample_ratio=0.5,
+    )
+    new_db = model._filter_database(db)
+    assert len(new_db.facts) == 5
 
 
 def test_model_fit(monkeypatch):
@@ -97,5 +109,7 @@ def test_model_fit(monkeypatch):
     model = DeepRDN(
         background=bk,
         target="test",
+        sample_ratio=1.0,
+        predicate_ratio=1.0,
     )
     model.fit(db)
