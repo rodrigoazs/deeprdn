@@ -19,4 +19,4 @@ class BaseProver:
         return predicate, arguments
 
     def prover(self, head_mapping, clause):
-        pass
+        raise NotImplementedError
