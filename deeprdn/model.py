@@ -8,18 +8,40 @@ import re
 
 
 class DeepRDN:
+    """Deep Relational Network Dependency Estimator
+    """
     def __init__(
         self,
-        background=None,
-        target="None",
-        n_estimators=50,
-        node_size=2,
-        number_of_clauses=4,
-        max_tree_depth=2,
-        n_boost_estimators=1,
-        predicate_prob=0.5,
-        sample_prob=0.5,
+        background: Background = None,
+        target: str = "None",
+        n_estimators: int = 50,
+        node_size: int = 2,
+        number_of_clauses: int = 4,
+        max_tree_depth: int = 2,
+        n_boost_estimators: int = 1,
+        predicate_prob: float = 0.5,
+        sample_prob: float = 0.5,
     ):
+        """Initialize a DeepRDN
+
+        Args:
+            background (Background, optional): Background knowledge with respect
+                to the database. Defaults to None.
+            target (str, optional): Target predicate to learn. Defaults to "None".
+            n_estimators (int, optional): Number of trees to fit as bagging.
+                Defaults to 50.
+            node_size (int, optional): Maximum number of literals in each node.
+                Defaults to 2.
+            number_of_clauses (int, optional): [description]. Defaults to 4.
+            max_tree_depth (int, optional): Maximum number of nodes from root to
+                leaf (height) in the tree. Defaults to 2.
+            n_boost_estimators (int, optional): Number of trees to fit as boosting.
+                Defaults to 1.
+            predicate_prob (float, optional): Probability of considering a predicate
+                in the search space. Defaults to 0.5.
+            sample_prob (float, optional): Probability of considering a sample when
+                training. Defaults to 0.5.
+        """
         self.background = background
         if type(self.background) == Background:
             self.background.number_of_clauses = number_of_clauses
