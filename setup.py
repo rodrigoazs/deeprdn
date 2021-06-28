@@ -14,8 +14,11 @@ setup(
     package_dir={"deeprdn": "deeprdn"},
     author="Rodrigo Azevedo Santos (rodrigoazs)",
     author_email="rodrigoazvsantos@gmail.com",
+    version="0.1.0",
     description="A deep learning approach for SRL.",
-    download_url="https://github.com/rodrigoazs/deeprdn",
+    include_package_data=True,
+    package_data={"deepedn": []},
+    download_url="https://github.com/rodrigoazs/ensemblerdn",
     license="GPL-3.0",
     zip_safe=False,
     classifiers=[
