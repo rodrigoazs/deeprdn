@@ -11,7 +11,7 @@ from os import path
 setup(
     name="deeprdn",
     packages=find_packages(exclude=["test"]),
-    package_dir={"srlearn": "srlearn"},
+    package_dir={"deeprdn": "deeprdn"},
     author="Rodrigo Azevedo Santos (rodrigoazs)",
     author_email="rodrigoazvsantos@gmail.com",
     description="A deep learning approach for SRL.",
