@@ -29,7 +29,7 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
     keywords="machine-learning-algorithms machine-learning statistical-learning pattern-classification artificial-intelligence",
-    install_requires=["numpy", "srlearn", "pandas", "tensorflow", "keras"],
+    install_requires=["numpy", "srlearn", "pandas", "tensorflow"],
     extras_require={
         "tests": ["pytest"],
     },
